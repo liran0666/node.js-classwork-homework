@@ -1,23 +1,16 @@
-const { randomInt } = require('crypto');
-const fs = require('fs');
-const path = require('path');
+//meital israel and liran edelshtein
+const http = require("http"); // Import Node.js core module
+const fs = require("fs"); // import file module
+const path = require("path");
+const dirPath = path.join(__dirname, "/templates");
 
-function fileMaker() {
-  const dirpath = path.join(__dirname, 'files');
-  for (let i = 1; i <= 10; i++) {
-    let whattowrite = 'hello' + i + '\n';
-    console.log(whattowrite);
-    const filePath = path.join(dirpath, `file${i}.txt`);
+// read html file
+const file2Send = fs.readFileSync(`${dirPath}/page.html`);
+const server = http.createServer(function (req, res) {
+  console.log(req);
+  res.setHeader("Content-Type", "text/html");
+  res.end(file2Send);
+});
 
-    for (let j = 1; j <= randomInt(20); j++) {
-      whattowrite += 'asdfeawg' + j + '\n';
-    }
-    fs.writeFileSync(filePath, whattowrite);
-  }
-}
-fileMaker();
-
-function srter() {
-  let texttouse = '';
-  for (let i = 1; i <= 10; i++) {}
-}
+server.listen(3000); 
+console.log("Node.js web server at port 3000 is running..");
